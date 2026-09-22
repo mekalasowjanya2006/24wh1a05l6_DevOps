@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Interactive Todo List</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 500px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: #4CAF50;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .input-section {
+            display: flex;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #388E3C;
+        }
+
+        .search-section {
+            padding: 0 20px 10px;
+        }
+
+        .search-section input {
+            width: 100%;
+        }
+
+        .content {
+            padding: 10px 20px 20px;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 17px;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            padding: 8px 12px;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #eeeeee;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>📝 My Todo List</h1>
+        <p>Plan Your Day Productively!</p>
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <button onclick="addTask()">Add</button>
+    </div>
+
+    <div class="search-section">
+        <input type="text"
+               id="searchInput"
+               placeholder="🔍 Search tasks..."
+               onkeyup="searchTask()">
+    </div>
+
+    <div class="content" id="taskList">
+
+        <div class="task">
+            <span>Complete Docker Experiment</span>
+            <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+        </div>
+
+        <div class="task">
+            <span>Study DevOps Concepts</span>
+            <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+        </div>
+
+        <div class="task">
+            <span>Practice Docker Commands</span>
+            <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        ✔ Stay Organized | ✔ Stay Productive
+    </div>
+
+</div>
+
+<script>
+function addTask() {
+    let input = document.getElementById("taskInput");
+    let taskText = input.value.trim();
+
+    if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+    }
+
+    let taskList = document.getElementById("taskList");
+
+    let task = document.createElement("div");
+    task.className = "task";
+
+    task.innerHTML =
+        "<span>" + taskText + "</span>" +
+        "<button class='delete-btn' onclick='deleteTask(this)'>Delete</button>";
+
+    taskList.appendChild(task);
+    input.value = "";
+}
+
+function deleteTask(button) {
+    button.parentElement.remove();
+}
+
+function searchTask() {
+    let input = document.getElementById("searchInput");
+    let filter = input.value.toLowerCase();
+
+    let tasks = document.getElementsByClassName("task");
+
+    for (let i = 0; i < tasks.length; i++) {
+        let text = tasks[i].innerText.toLowerCase();
+
+        if (text.includes(filter)) {
+            tasks[i].style.display = "flex";
+        } else {
+            tasks[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+</body>
+</html>
